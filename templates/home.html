@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mini Feedback Board</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+  <body>
+    <main class="page">
+      <h1>Mini Feedback Board</h1>
+      <p class="intro">Leave a short note for the project team.</p>
+
+      <form action="{{ url_for('add_feedback') }}" method="post" class="feedback-form">
+        <label for="name">Name</label>
+        <input id="name" name="name" maxlength="40" required>
+
+        <label for="message">Comment</label>
+        <textarea id="message" name="message" maxlength="500" required></textarea>
+
+        <button type="submit">Send feedback</button>
+      </form>
+
+      <section aria-labelledby="entries-heading">
+        <h2 id="entries-heading">Recent feedback</h2>
+        {% if feedback_entries %}
+          {% for entry in feedback_entries %}
+            <article class="entry">
+              <h3>{{ entry.name }}</h3>
+              <p>{{ entry.message }}</p>
+            </article>
+          {% endfor %}
+        {% else %}
+          <p>No feedback yet.</p>
+        {% endif %}
+      </section>
+    </main>
+  </body>
+</html>
+
